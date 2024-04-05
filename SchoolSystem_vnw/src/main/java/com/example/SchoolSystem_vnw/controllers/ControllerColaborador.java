@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SchoolSystem_vnw.dto.DtoRecordColaborador;
+import com.example.SchoolSystem_vnw.models.Endereco;
 import com.example.SchoolSystem_vnw.models.ModelColaborador;
 import com.example.SchoolSystem_vnw.dto.DtoRecordColaborador;
 import com.example.SchoolSystem_vnw.repositories.RepositoryColaborador;
@@ -33,9 +34,9 @@ public class ControllerColaborador {
 	RepositoryColaborador colaboradorRepository1;
 	
 	@PostMapping("/novoscolaboradores")
-	public ResponseEntity<ModelColaborador>saveColaborador(@RequestBody DtoRecordColaborador dtoRecordColaborador ){ //Valid é para validar as anotacoes do dto
+	public ResponseEntity<ModelColaborador>saveColaborador(@RequestBody DtoRecordColaborador dtoRecordColaborador ){ //o método espera receber um objeto do tipo DtoRecordColaborador da requisição HTT e sses dados seão salvos
 		
-	    var modelcolaborador =new ModelColaborador();
+	    var modelcolaborador =new ModelColaborador(dtoRecordColaborador.nome(),dtoRecordColaborador.email(),dtoRecordColaborador.cpf(),dtoRecordColaborador.cargo(), new Endereco(dtoRecordColaborador.endereco()));
 		
 		BeanUtils.copyProperties(dtoRecordColaborador, modelcolaborador); // converter Dto para model
 		
@@ -62,7 +63,7 @@ public class ControllerColaborador {
 		if(colaborador0.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Colaborador nao encontrado.");
 		}
-		var modelColaborador = colaboradorO.get();
+		var modelColaborador = colaborador0.get();
 		BeanUtils.copyProperties(dtoRecordColaborador, modelColaborador);
 		return ResponseEntity.status(HttpStatus.OK).body(colaboradorRepository1.save(modelColaborador));
 	}

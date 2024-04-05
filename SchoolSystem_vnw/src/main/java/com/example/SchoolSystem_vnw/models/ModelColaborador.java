@@ -3,6 +3,7 @@ package com.example.SchoolSystem_vnw.models;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.SchoolSystem_vnw.dto.DtoEndereco;
 import com.example.SchoolSystem_vnw.enums.EnumCargo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -102,14 +103,19 @@ public class ModelColaborador {
 	}
 
 
-	public ModelColaborador() {
+	public ModelColaborador(String nome,String email, String cpf, EnumCargo cargo,DtoEndereco endereco) {
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
 		this.cargo = cargo;
+		this.endereco = new Endereco(endereco.cep(),endereco.logradouro(),endereco.bairro(),endereco.cidade(), endereco.complemento(),endereco.numero());
 	}
 
 
+	
+
 	}
+
+
 	
 

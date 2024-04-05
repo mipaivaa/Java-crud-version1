@@ -1,5 +1,7 @@
 package com.example.SchoolSystem_vnw.models;
 
+import com.example.SchoolSystem_vnw.dto.DtoEndereco;
+
 import jakarta.persistence.Embeddable;
 
 
@@ -60,5 +62,8 @@ public class Endereco {
 		this.numero = numero;
 	}
 
-	
+	public Endereco(DtoEndereco endereco) {
+		// TODO Auto-generated constructor stub
+	}
+
 }
