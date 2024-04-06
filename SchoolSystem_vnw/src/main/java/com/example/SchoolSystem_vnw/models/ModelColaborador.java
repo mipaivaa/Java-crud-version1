@@ -1,10 +1,10 @@
 package com.example.SchoolSystem_vnw.models;
 
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.example.SchoolSystem_vnw.dto.DtoEndereco;
 import com.example.SchoolSystem_vnw.enums.EnumCargo;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
 //Anotação que diz que essa classe é uma entidade
@@ -36,7 +38,7 @@ public class ModelColaborador {
 	@Email 
 	private String email;
 	@Column(unique = true)
-	
+	@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato xxx.xxx.xxx-xx")
 	private String cpf;
 	private EnumCargo cargo;
 	@Embedded 
@@ -111,7 +113,9 @@ public class ModelColaborador {
 		this.endereco = new Endereco(endereco.cep(),endereco.logradouro(),endereco.bairro(),endereco.cidade(), endereco.complemento(),endereco.numero());
 	}
 
-
+	 public ModelColaborador() {
+	        // Construtor padrão sem argumentos
+	    }
 	
 
 	}

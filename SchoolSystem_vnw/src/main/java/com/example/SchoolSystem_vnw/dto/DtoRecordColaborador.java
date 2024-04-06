@@ -5,7 +5,7 @@ import com.example.SchoolSystem_vnw.enums.EnumCargo;
 
 
 
-public record DtoRecordColaborador(String nome, String cpf, String email, EnumCargo cargo) {
+public record DtoRecordColaborador(String nome, String cpf, String email, EnumCargo cargo,DtoEndereco endereco) {
 
 
 

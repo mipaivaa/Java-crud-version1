@@ -2,6 +2,7 @@ package com.example.SchoolSystem_vnw.controllers;
 
 import java.util.List;
 import java.util.Optional;
+
 //import org.apache.el.stream.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,37 +17,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.SchoolSystem_vnw.dto.DtoListar;
 import com.example.SchoolSystem_vnw.dto.DtoRecordColaborador;
-import com.example.SchoolSystem_vnw.models.Endereco;
 import com.example.SchoolSystem_vnw.models.ModelColaborador;
-import com.example.SchoolSystem_vnw.dto.DtoRecordColaborador;
 import com.example.SchoolSystem_vnw.repositories.RepositoryColaborador;
-
-
-import com.example.SchoolSystem_vnw.service.ServiceColaborador;
-import jakarta.validation.Valid;
+import com.example.SchoolSystem_vnw.service.ListarService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/colaborador")
 public class ControllerColaborador {
 
 	@Autowired 
 	RepositoryColaborador colaboradorRepository1;
 	
+	 @Autowired
+	    ListarService dtoListarService;
+	
 	@PostMapping("/novoscolaboradores")
 	public ResponseEntity<ModelColaborador>saveColaborador(@RequestBody DtoRecordColaborador dtoRecordColaborador ){ //o método espera receber um objeto do tipo DtoRecordColaborador da requisição HTT e sses dados seão salvos
 		
-	    var modelcolaborador =new ModelColaborador(dtoRecordColaborador.nome(),dtoRecordColaborador.email(),dtoRecordColaborador.cpf(),dtoRecordColaborador.cargo(), new Endereco(dtoRecordColaborador.endereco()));
+	    var modelcolaborador =new ModelColaborador(dtoRecordColaborador.nome(),dtoRecordColaborador.email(),dtoRecordColaborador.cpf(),dtoRecordColaborador.cargo(), dtoRecordColaborador.endereco());
 		
 		BeanUtils.copyProperties(dtoRecordColaborador, modelcolaborador); // converter Dto para model
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(colaboradorRepository1.save(modelcolaborador));
 	}
 	
-    @GetMapping("/colaboradores")
-    public ResponseEntity<List<ModelColaborador>> getAllColaboradores(){
-    	return ResponseEntity.status(HttpStatus.OK).body(colaboradorRepository1.findAll());
+ 
+    
+	@GetMapping("/colaboradores")
+    public ResponseEntity<List<DtoListar>> getAllColaboradores() {
+        List<ModelColaborador> colaboradores = colaboradorRepository1.findAll();
+        List<DtoListar> dtos = dtoListarService.convertColaboradoresToDtoListar(colaboradores);
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
+	
     
     @GetMapping("/colaboradores/{id}")
     		public ResponseEntity<Object> getOneColaborador(@PathVariable(value="id") long id){

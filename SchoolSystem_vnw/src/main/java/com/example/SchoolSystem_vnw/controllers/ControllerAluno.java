@@ -25,7 +25,7 @@ import com.example.SchoolSystem_vnw.repositories.RepositoryAluno;
 import com.example.SchoolSystem_vnw.repositories.RepositoryColaborador;
 
 @RestController
-@RequestMapping
+@RequestMapping("/aluno")
 public class ControllerAluno {
 	
 	@Autowired 

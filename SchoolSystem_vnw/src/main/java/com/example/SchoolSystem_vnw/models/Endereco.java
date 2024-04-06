@@ -52,8 +52,9 @@ public class Endereco {
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
+	
 	public Endereco(String cep, String logradouro, String bairro, String cidade, String complemento, Integer numero) {
-		super();
+		
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.bairro = bairro;
@@ -65,5 +66,6 @@ public class Endereco {
 	public Endereco(DtoEndereco endereco) {
 		// TODO Auto-generated constructor stub
 	}
-
+	   public Endereco() {
+	    }
 }
